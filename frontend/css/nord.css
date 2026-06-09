@@ -1,0 +1,306 @@
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
+
+:root {
+  --nord-bg:      #2e3440;
+  --nord-surface: #3b4252;
+  --nord-surface2:#434c5e;
+  --nord-fg:      #eceff4;
+  --nord-muted:   #d8dee9;
+  --nord-comment: #4c566a;
+  --nord-blue:    #5e81ac;
+  --nord-frost:   #88c0d0;
+  --nord-ice:     #81a1c1;
+  --nord-green:   #a3be8c;
+  --nord-yellow:  #ebcb8b;
+  --nord-red:     #bf616a;
+  --nord-orange:  #d08770;
+  --nord-purple:  #b48ead;
+}
+
+* {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--nord-bg);
+  color: var(--nord-fg);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+a {
+  color: var(--nord-frost);
+}
+
+a:hover {
+  color: var(--nord-ice);
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--nord-surface) !important;
+  border-bottom: 1px solid var(--nord-comment);
+}
+
+.navbar-brand {
+  color: var(--nord-frost) !important;
+  font-weight: bold;
+}
+
+.nav-link {
+  color: var(--nord-fg) !important;
+}
+
+.nav-link:hover {
+  color: var(--nord-frost) !important;
+}
+
+.nav-tabs {
+  border-bottom-color: var(--nord-comment);
+}
+
+.nav-tabs .nav-link {
+  border: none;
+  border-bottom: 2px solid transparent;
+  background-color: transparent !important;
+  color: var(--nord-muted) !important;
+  border-radius: 0;
+}
+
+.nav-tabs .nav-link:hover {
+  border-bottom-color: var(--nord-comment);
+  color: var(--nord-frost) !important;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: transparent !important;
+  border: none;
+  border-bottom: 2px solid var(--nord-frost);
+  color: var(--nord-frost) !important;
+}
+
+/* Cards */
+.card {
+  background-color: var(--nord-surface);
+  border: 1px solid var(--nord-comment);
+  color: var(--nord-fg);
+}
+
+.card-header {
+  background-color: rgba(76, 86, 106, 0.3);
+  border-bottom: 1px solid var(--nord-comment);
+}
+
+.card-title {
+  color: var(--nord-frost);
+}
+
+/* Forms */
+.form-control,
+.form-select {
+  background-color: var(--nord-surface2);
+  border: 1px solid var(--nord-comment);
+  color: var(--nord-fg);
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: var(--nord-surface2);
+  border-color: var(--nord-frost);
+  color: var(--nord-fg);
+  box-shadow: 0 0 0 0.2rem rgba(136, 192, 208, 0.25);
+}
+
+.form-label {
+  color: var(--nord-fg);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--nord-blue);
+  border-color: var(--nord-blue);
+  color: var(--nord-fg);
+}
+
+.btn-primary:hover {
+  background-color: var(--nord-frost);
+  border-color: var(--nord-frost);
+  color: var(--nord-bg);
+}
+
+.btn-primary:focus {
+  box-shadow: 0 0 0 0.25rem rgba(94, 129, 172, 0.5);
+}
+
+.btn-danger {
+  background-color: var(--nord-red);
+  border-color: var(--nord-red);
+}
+
+.btn-danger:hover {
+  background-color: #c9474f;
+  border-color: #c9474f;
+}
+
+.btn-success {
+  background-color: var(--nord-green);
+  border-color: var(--nord-green);
+  color: var(--nord-bg);
+}
+
+.btn-success:hover {
+  background-color: #91a87c;
+  border-color: #91a87c;
+  color: var(--nord-bg);
+}
+
+.btn-secondary {
+  background-color: var(--nord-comment);
+  border-color: var(--nord-comment);
+}
+
+.btn-secondary:hover {
+  background-color: var(--nord-surface2);
+  border-color: var(--nord-ice);
+  color: var(--nord-ice);
+}
+
+/* Tables */
+.table {
+  color: var(--nord-fg);
+  border-color: var(--nord-comment);
+  --bs-table-color: var(--nord-fg);
+  --bs-table-bg: transparent;
+  --bs-table-border-color: var(--nord-comment);
+  --bs-table-striped-bg: rgba(59, 66, 82, 0.5);
+  --bs-table-striped-color: var(--nord-fg);
+  --bs-table-hover-bg: rgba(76, 86, 106, 0.4);
+  --bs-table-hover-color: var(--nord-fg);
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: rgba(59, 66, 82, 0.5);
+}
+
+.table-hover > tbody > tr:hover > * {
+  background-color: rgba(76, 86, 106, 0.4);
+}
+
+thead th {
+  color: var(--nord-frost);
+  border-bottom-color: var(--nord-comment) !important;
+}
+
+.table-bordered {
+  border-color: var(--nord-comment);
+}
+
+.table-bordered > :not(caption) > * > * {
+  border-color: var(--nord-comment);
+}
+
+/* Alerts */
+.alert {
+  border: none;
+}
+
+.alert-danger {
+  background-color: rgba(191, 97, 106, 0.2);
+  color: var(--nord-red);
+}
+
+.alert-success {
+  background-color: rgba(163, 190, 140, 0.2);
+  color: var(--nord-green);
+}
+
+.alert-info {
+  background-color: rgba(136, 192, 208, 0.2);
+  color: var(--nord-frost);
+}
+
+/* Modals */
+.modal-content {
+  background-color: var(--nord-surface);
+  border: 1px solid var(--nord-comment);
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--nord-comment);
+}
+
+.modal-body {
+  color: var(--nord-fg);
+}
+
+/* Badges */
+.badge {
+  background-color: var(--nord-blue);
+}
+
+.badge.bg-success {
+  background-color: var(--nord-green) !important;
+  color: var(--nord-bg) !important;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+  background-color: var(--nord-surface2) !important;
+  color: var(--nord-fg) !important;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--nord-frost) !important;
+  box-shadow: 0 0 0 0.2rem rgba(136, 192, 208, 0.25) !important;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--nord-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--nord-surface2);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--nord-comment);
+}
+
+/* Text utilities */
+.text-success {
+  color: var(--nord-green) !important;
+}
+
+.text-danger {
+  color: var(--nord-red) !important;
+}
+
+/* Custom utilities */
+.bg-surface {
+  background-color: var(--nord-surface);
+}
+
+.text-muted {
+  color: var(--nord-comment) !important;
+}
+
+.border-subtle {
+  border-color: var(--nord-comment) !important;
+}

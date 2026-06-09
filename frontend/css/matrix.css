@@ -1,0 +1,447 @@
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
+
+:root {
+  --matrix-bg: #000000;
+  --matrix-surface: #0a1a0a;
+  --matrix-fg: #00ff41;
+  --matrix-comment: #008f11;
+  --matrix-bright: #39ff14;
+  --matrix-dim: #005c0a;
+  --matrix-red: #ff0000;
+  --matrix-yellow: #ffff00;
+  --matrix-cyan: #00ffaa;
+  --matrix-white: #ccffcc;
+  --matrix-border: #00ff41;
+}
+
+* {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--matrix-bg);
+  color: var(--matrix-fg);
+  font-family: 'Courier New', Courier, monospace;
+}
+
+a {
+  color: var(--matrix-bright);
+}
+
+a:hover {
+  color: var(--matrix-cyan);
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--matrix-surface) !important;
+  border-bottom: 1px solid var(--matrix-border);
+}
+
+.navbar-brand {
+  color: var(--matrix-bright) !important;
+  font-weight: bold;
+  text-shadow: 0 0 8px var(--matrix-bright);
+}
+
+.nav-link {
+  color: var(--matrix-fg) !important;
+}
+
+.nav-link:hover {
+  color: var(--matrix-bright) !important;
+  text-shadow: 0 0 6px var(--matrix-bright);
+}
+
+/* Cards */
+.card {
+  background-color: var(--matrix-surface);
+  border: 1px solid var(--matrix-border);
+  color: var(--matrix-fg);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.15);
+}
+
+.card-header {
+  background-color: rgba(0, 143, 17, 0.2);
+  border-bottom: 1px solid var(--matrix-border);
+}
+
+.card-title {
+  color: var(--matrix-bright);
+  text-shadow: 0 0 6px var(--matrix-bright);
+}
+
+/* Forms */
+.form-control,
+.form-select {
+  background-color: #000000;
+  border: 1px solid var(--matrix-comment);
+  color: var(--matrix-fg);
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: #000000;
+  border-color: var(--matrix-bright);
+  color: var(--matrix-fg);
+  box-shadow: 0 0 0 0.2rem rgba(0, 255, 65, 0.25);
+}
+
+.form-label {
+  color: var(--matrix-fg);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--matrix-comment);
+  border-color: var(--matrix-border);
+  color: var(--matrix-fg);
+}
+
+.btn-primary:hover {
+  background-color: var(--matrix-dim);
+  border-color: var(--matrix-bright);
+  color: var(--matrix-bright);
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
+}
+
+.btn-primary:focus {
+  box-shadow: 0 0 0 0.25rem rgba(0, 255, 65, 0.4);
+}
+
+.btn-danger {
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: var(--matrix-comment);
+  --bs-btn-color: var(--matrix-comment);
+  --bs-btn-hover-bg: var(--matrix-dim);
+  --bs-btn-hover-border-color: var(--matrix-border);
+  --bs-btn-hover-color: var(--matrix-fg);
+  --bs-btn-active-bg: var(--matrix-dim);
+  --bs-btn-active-border-color: var(--matrix-border);
+  --bs-btn-active-color: var(--matrix-fg);
+  background-color: transparent;
+  border-color: var(--matrix-comment);
+  color: var(--matrix-comment);
+}
+
+.btn-danger:hover {
+  background-color: var(--matrix-dim);
+  border-color: var(--matrix-border);
+  color: var(--matrix-fg);
+  box-shadow: 0 0 6px rgba(0, 255, 65, 0.3);
+}
+
+.btn-success {
+  background-color: var(--matrix-dim);
+  border-color: var(--matrix-border);
+  color: var(--matrix-fg);
+}
+
+.btn-success:hover {
+  background-color: var(--matrix-comment);
+  border-color: var(--matrix-bright);
+  color: var(--matrix-bright);
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
+}
+
+.btn-secondary {
+  background-color: #0d0d0d;
+  border-color: var(--matrix-comment);
+  color: var(--matrix-comment);
+}
+
+.btn-secondary:hover {
+  background-color: var(--matrix-surface);
+  border-color: var(--matrix-border);
+  color: var(--matrix-fg);
+}
+
+.btn-warning {
+  background-color: #1a1400;
+  border-color: var(--matrix-yellow);
+  color: var(--matrix-yellow);
+}
+
+.btn-warning:hover {
+  background-color: var(--matrix-yellow);
+  border-color: var(--matrix-yellow);
+  color: #000;
+}
+
+.btn-info {
+  background-color: #001a14;
+  border-color: var(--matrix-cyan);
+  color: var(--matrix-cyan);
+}
+
+.btn-info:hover {
+  background-color: var(--matrix-cyan);
+  border-color: var(--matrix-cyan);
+  color: #000;
+}
+
+.btn-outline-info {
+  border-color: var(--matrix-cyan);
+  color: var(--matrix-cyan);
+}
+
+.btn-outline-info:hover {
+  background-color: var(--matrix-cyan);
+  color: #000;
+}
+
+.btn-outline-secondary {
+  border-color: var(--matrix-comment);
+  color: var(--matrix-comment);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--matrix-comment);
+  color: #000;
+}
+
+/* Tables */
+.table {
+  color: var(--matrix-fg);
+  border-color: var(--matrix-comment);
+  --bs-table-color: var(--matrix-fg);
+  --bs-table-bg: transparent;
+  --bs-table-border-color: var(--matrix-comment);
+  --bs-table-striped-bg: rgba(0, 143, 17, 0.12);
+  --bs-table-striped-color: var(--matrix-fg);
+  --bs-table-hover-bg: rgba(0, 255, 65, 0.1);
+  --bs-table-hover-color: var(--matrix-fg);
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: rgba(0, 143, 17, 0.12);
+}
+
+.table-hover > tbody > tr:hover > * {
+  background-color: rgba(0, 255, 65, 0.1);
+  color: var(--matrix-fg);
+}
+
+.table-bordered {
+  border-color: var(--matrix-comment);
+}
+
+.table-bordered > :not(caption) > * > * {
+  border-color: var(--matrix-comment);
+}
+
+thead th {
+  color: var(--matrix-bright);
+  border-bottom-color: var(--matrix-border) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.85rem;
+}
+
+/* Alerts */
+.alert {
+  border: 1px solid;
+}
+
+.alert-danger {
+  background-color: rgba(255, 0, 0, 0.1);
+  border-color: var(--matrix-red);
+  color: var(--matrix-red);
+}
+
+.alert-success {
+  background-color: rgba(0, 255, 65, 0.1);
+  border-color: var(--matrix-border);
+  color: var(--matrix-fg);
+}
+
+.alert-info {
+  background-color: rgba(0, 255, 170, 0.1);
+  border-color: var(--matrix-cyan);
+  color: var(--matrix-cyan);
+}
+
+.alert-warning {
+  background-color: rgba(255, 255, 0, 0.1);
+  border-color: var(--matrix-yellow);
+  color: var(--matrix-yellow);
+}
+
+/* Modals */
+.modal-content {
+  background-color: var(--matrix-surface);
+  border: 1px solid var(--matrix-border);
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--matrix-border);
+}
+
+.modal-body {
+  color: var(--matrix-fg);
+}
+
+.modal-footer {
+  border-top: 1px solid var(--matrix-comment);
+}
+
+.modal-title {
+  color: var(--matrix-bright);
+}
+
+.btn-close {
+  filter: invert(1) sepia(1) saturate(5) hue-rotate(80deg);
+}
+
+/* Badges */
+.badge {
+  background-color: var(--matrix-dim) !important;
+  color: var(--matrix-fg);
+  border: 1px solid var(--matrix-comment);
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.badge.bg-success {
+  background-color: rgba(0, 255, 65, 0.15) !important;
+  border-color: var(--matrix-border);
+  color: var(--matrix-fg);
+}
+
+.badge.bg-warning {
+  background-color: rgba(255, 255, 0, 0.15) !important;
+  border-color: var(--matrix-yellow);
+  color: var(--matrix-yellow);
+}
+
+.badge.bg-primary {
+  background-color: rgba(0, 255, 65, 0.15) !important;
+  border-color: var(--matrix-border);
+  color: var(--matrix-fg);
+}
+
+/* Text utilities */
+.text-success {
+  color: var(--matrix-fg) !important;
+}
+
+.text-danger {
+  color: var(--matrix-red) !important;
+}
+
+.text-warning {
+  color: var(--matrix-yellow) !important;
+}
+
+.text-info {
+  color: var(--matrix-cyan) !important;
+}
+
+.text-primary {
+  color: var(--matrix-bright) !important;
+}
+
+/* Button link (nav logout button) */
+.btn-link {
+  color: var(--matrix-fg) !important;
+  text-decoration: none;
+}
+
+.btn-link:hover {
+  color: var(--matrix-bright) !important;
+}
+
+/* Nav tabs */
+.nav-tabs {
+  border-bottom: 1px solid var(--matrix-comment);
+}
+
+.nav-tabs .nav-link {
+  color: var(--matrix-comment) !important;
+  border: 1px solid transparent;
+  font-family: 'Courier New', Courier, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.85rem;
+}
+
+.nav-tabs .nav-link:hover {
+  color: var(--matrix-fg) !important;
+  border-color: var(--matrix-comment);
+  background-color: rgba(0, 255, 65, 0.05);
+}
+
+.nav-tabs .nav-link.active {
+  color: var(--matrix-bright) !important;
+  background-color: var(--matrix-surface);
+  border-color: var(--matrix-border) var(--matrix-border) var(--matrix-surface);
+  text-shadow: 0 0 6px var(--matrix-bright);
+}
+
+/* Inputs */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+  background-color: #000000 !important;
+  color: var(--matrix-fg) !important;
+  caret-color: var(--matrix-bright);
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--matrix-bright) !important;
+  box-shadow: 0 0 0 0.2rem rgba(0, 255, 65, 0.25) !important;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--matrix-fg);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--matrix-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--matrix-dim);
+  border-radius: 0;
+  border: 1px solid var(--matrix-comment);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--matrix-comment);
+}
+
+/* Custom utilities */
+.bg-surface {
+  background-color: var(--matrix-surface);
+}
+
+.text-muted {
+  color: var(--matrix-comment) !important;
+}
+
+.border-subtle {
+  border-color: var(--matrix-comment) !important;
+}
+
+/* Input group */
+.input-group-text {
+  background-color: var(--matrix-surface);
+  border-color: var(--matrix-comment);
+  color: var(--matrix-fg);
+}

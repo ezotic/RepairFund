@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RepairFund - Login</title>
+  <link id="theme-stylesheet" rel="stylesheet" href="/css/dracula.css">
+  <script>(function(){var s=localStorage.getItem('repairfund-theme');if(s&&s!=='dracula'){document.getElementById('theme-stylesheet').href='/css/'+s+'.css';}})()</script>
+</head>
+<body class="d-flex align-items-center justify-content-center min-vh-100">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg">
+          <div class="card-body p-5">
+            <h1 class="card-title text-center mb-4">RepairFund</h1>
+            <p class="text-center text-muted mb-4">Multi-User Fund Tracker</p>
+
+            <div id="error" class="alert alert-danger d-none" role="alert"></div>
+
+            <form id="loginForm">
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" required autofocus>
+              </div>
+
+              <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" required>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/login.js"></script>
+</body>
+</html>

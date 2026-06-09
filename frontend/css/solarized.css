@@ -1,0 +1,307 @@
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
+
+:root {
+  --sol-bg:      #002b36;
+  --sol-surface: #073642;
+  --sol-surface2:#0a4459;
+  --sol-fg:      #839496;
+  --sol-fg2:     #93a1a1;
+  --sol-comment: #586e75;
+  --sol-blue:    #268bd2;
+  --sol-cyan:    #2aa198;
+  --sol-green:   #859900;
+  --sol-yellow:  #b58900;
+  --sol-orange:  #cb4b16;
+  --sol-red:     #dc322f;
+  --sol-magenta: #d33682;
+  --sol-violet:  #6c71c4;
+}
+
+* {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--sol-bg);
+  color: var(--sol-fg2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+a {
+  color: var(--sol-cyan);
+}
+
+a:hover {
+  color: var(--sol-blue);
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--sol-surface) !important;
+  border-bottom: 1px solid var(--sol-comment);
+}
+
+.navbar-brand {
+  color: var(--sol-cyan) !important;
+  font-weight: bold;
+}
+
+.nav-link {
+  color: var(--sol-fg2) !important;
+}
+
+.nav-link:hover {
+  color: var(--sol-cyan) !important;
+}
+
+.nav-tabs {
+  border-bottom-color: var(--sol-comment);
+}
+
+.nav-tabs .nav-link {
+  border: none;
+  border-bottom: 2px solid transparent;
+  background-color: transparent !important;
+  color: var(--sol-fg) !important;
+  border-radius: 0;
+}
+
+.nav-tabs .nav-link:hover {
+  border-bottom-color: var(--sol-comment);
+  color: var(--sol-cyan) !important;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: transparent !important;
+  border: none;
+  border-bottom: 2px solid var(--sol-cyan);
+  color: var(--sol-cyan) !important;
+}
+
+/* Cards */
+.card {
+  background-color: var(--sol-surface);
+  border: 1px solid var(--sol-comment);
+  color: var(--sol-fg2);
+}
+
+.card-header {
+  background-color: rgba(88, 110, 117, 0.2);
+  border-bottom: 1px solid var(--sol-comment);
+}
+
+.card-title {
+  color: var(--sol-cyan);
+}
+
+/* Forms */
+.form-control,
+.form-select {
+  background-color: var(--sol-surface2);
+  border: 1px solid var(--sol-comment);
+  color: var(--sol-fg2);
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: var(--sol-surface2);
+  border-color: var(--sol-cyan);
+  color: var(--sol-fg2);
+  box-shadow: 0 0 0 0.2rem rgba(42, 161, 152, 0.25);
+}
+
+.form-label {
+  color: var(--sol-fg2);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--sol-blue);
+  border-color: var(--sol-blue);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #1e7cbf;
+  border-color: #1e7cbf;
+  color: #fff;
+}
+
+.btn-primary:focus {
+  box-shadow: 0 0 0 0.25rem rgba(38, 139, 210, 0.5);
+}
+
+.btn-danger {
+  background-color: var(--sol-red);
+  border-color: var(--sol-red);
+}
+
+.btn-danger:hover {
+  background-color: #c02b28;
+  border-color: #c02b28;
+}
+
+.btn-success {
+  background-color: var(--sol-green);
+  border-color: var(--sol-green);
+  color: #fff;
+}
+
+.btn-success:hover {
+  background-color: #6e7d00;
+  border-color: #6e7d00;
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: var(--sol-comment);
+  border-color: var(--sol-comment);
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background-color: var(--sol-surface2);
+  border-color: var(--sol-cyan);
+  color: var(--sol-cyan);
+}
+
+/* Tables */
+.table {
+  color: var(--sol-fg2);
+  border-color: var(--sol-comment);
+  --bs-table-color: var(--sol-fg2);
+  --bs-table-bg: transparent;
+  --bs-table-border-color: var(--sol-comment);
+  --bs-table-striped-bg: rgba(7, 54, 66, 0.7);
+  --bs-table-striped-color: var(--sol-fg2);
+  --bs-table-hover-bg: rgba(88, 110, 117, 0.2);
+  --bs-table-hover-color: var(--sol-fg2);
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: rgba(7, 54, 66, 0.7);
+}
+
+.table-hover > tbody > tr:hover > * {
+  background-color: rgba(88, 110, 117, 0.2);
+}
+
+thead th {
+  color: var(--sol-cyan);
+  border-bottom-color: var(--sol-comment) !important;
+}
+
+.table-bordered {
+  border-color: var(--sol-comment);
+}
+
+.table-bordered > :not(caption) > * > * {
+  border-color: var(--sol-comment);
+}
+
+/* Alerts */
+.alert {
+  border: none;
+}
+
+.alert-danger {
+  background-color: rgba(220, 50, 47, 0.2);
+  color: var(--sol-red);
+}
+
+.alert-success {
+  background-color: rgba(133, 153, 0, 0.2);
+  color: var(--sol-green);
+}
+
+.alert-info {
+  background-color: rgba(42, 161, 152, 0.2);
+  color: var(--sol-cyan);
+}
+
+/* Modals */
+.modal-content {
+  background-color: var(--sol-surface);
+  border: 1px solid var(--sol-comment);
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--sol-comment);
+}
+
+.modal-body {
+  color: var(--sol-fg2);
+}
+
+/* Badges */
+.badge {
+  background-color: var(--sol-blue);
+}
+
+.badge.bg-success {
+  background-color: var(--sol-green) !important;
+  color: #fff !important;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+  background-color: var(--sol-surface2) !important;
+  color: var(--sol-fg2) !important;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--sol-cyan) !important;
+  box-shadow: 0 0 0 0.2rem rgba(42, 161, 152, 0.25) !important;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--sol-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sol-surface2);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sol-comment);
+}
+
+/* Text utilities */
+.text-success {
+  color: var(--sol-green) !important;
+}
+
+.text-danger {
+  color: var(--sol-red) !important;
+}
+
+/* Custom utilities */
+.bg-surface {
+  background-color: var(--sol-surface);
+}
+
+.text-muted {
+  color: var(--sol-comment) !important;
+}
+
+.border-subtle {
+  border-color: var(--sol-comment) !important;
+}
