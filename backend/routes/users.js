@@ -1,12 +1,16 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import pool from '../db/pool.js';
 import adminMiddleware from '../middleware/admin.js';
 
 const router = express.Router();
 
-const generateTempPassword = () => {
-  return Math.random().toString(36).slice(2, 14);
+const generateTempPassword = () => crypto.randomBytes(8).toString('hex');
+
+const parseId = (raw) => {
+  const id = parseInt(raw, 10);
+  return Number.isInteger(id) && id > 0 ? id : null;
 };
 
 // GET /api/users - List all users (admin only)
@@ -67,9 +71,10 @@ router.post('/', adminMiddleware, async (req, res) => {
 // DELETE /api/users/:id - Delete user (admin only)
 router.delete('/:id', adminMiddleware, async (req, res) => {
   try {
-    const userId = req.params.id;
+    const userId = parseId(req.params.id);
+    if (!userId) return res.status(400).json({ error: 'Invalid user ID' });
 
-    if (parseInt(userId) === req.user.id) {
+    if (userId === req.user.id) {
       return res.status(400).json({ error: 'Cannot delete your own account' });
     }
 
@@ -90,9 +95,10 @@ router.delete('/:id', adminMiddleware, async (req, res) => {
 // PUT /api/users/:id/role - Toggle user role between 'user' and 'admin' (admin only)
 router.put('/:id/role', adminMiddleware, async (req, res) => {
   try {
-    const userId = req.params.id;
+    const userId = parseId(req.params.id);
+    if (!userId) return res.status(400).json({ error: 'Invalid user ID' });
 
-    if (parseInt(userId) === req.user.id) {
+    if (userId === req.user.id) {
       return res.status(400).json({ error: 'Cannot change your own role' });
     }
 
@@ -121,7 +127,8 @@ router.put('/:id/role', adminMiddleware, async (req, res) => {
 // POST /api/users/:id/reset-password - Reset user password (admin only)
 router.post('/:id/reset-password', adminMiddleware, async (req, res) => {
   try {
-    const userId = req.params.id;
+    const userId = parseId(req.params.id);
+    if (!userId) return res.status(400).json({ error: 'Invalid user ID' });
     const tempPassword = generateTempPassword();
     const hashedPassword = await bcrypt.hash(tempPassword, 10);
 

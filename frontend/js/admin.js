@@ -22,21 +22,63 @@ async function loadUsers() {
 
     const currentUserId = currentUser && currentUser.id;
 
-    table.innerHTML = users.map(user => {
+    table.innerHTML = '';
+    for (const user of users) {
       const isSelf = user.id === currentUserId;
-      const toggleLabel = user.role === 'admin' ? 'Demote to User' : 'Promote to Admin';
-      return `
-      <tr>
-        <td>${user.username}</td>
-        <td><span class="badge" style="background-color: ${user.role === 'admin' ? '#ff79c6' : '#8be9fd'}">${user.role}</span></td>
-        <td>${user.force_password_change ? '<span class="badge bg-warning">Password Change Required</span>' : '<span class="badge bg-success">Active</span>'}</td>
-        <td>
-          <button class="btn btn-sm btn-warning" onclick="resetPassword(${user.id})">Reset Password</button>
-          ${!isSelf ? `<button class="btn btn-sm btn-info" onclick="toggleRole(${user.id})">${toggleLabel}</button>` : ''}
-          ${!isSelf && user.role !== 'admin' ? `<button class="btn btn-sm btn-danger" onclick="deleteUser(${user.id})">Delete</button>` : ''}
-        </td>
-      </tr>`;
-    }).join('');
+      const tr = document.createElement('tr');
+
+      const tdName = document.createElement('td');
+      tdName.textContent = user.username;
+      tr.appendChild(tdName);
+
+      const tdRole = document.createElement('td');
+      const roleBadge = document.createElement('span');
+      roleBadge.className = 'badge';
+      roleBadge.style.backgroundColor = user.role === 'admin' ? '#ff79c6' : '#8be9fd';
+      roleBadge.textContent = user.role;
+      tdRole.appendChild(roleBadge);
+      tr.appendChild(tdRole);
+
+      const tdStatus = document.createElement('td');
+      const statusBadge = document.createElement('span');
+      if (user.force_password_change) {
+        statusBadge.className = 'badge bg-warning';
+        statusBadge.textContent = 'Password Change Required';
+      } else {
+        statusBadge.className = 'badge bg-success';
+        statusBadge.textContent = 'Active';
+      }
+      tdStatus.appendChild(statusBadge);
+      tr.appendChild(tdStatus);
+
+      const tdActions = document.createElement('td');
+
+      const btnReset = document.createElement('button');
+      btnReset.className = 'btn btn-sm btn-warning';
+      btnReset.textContent = 'Reset Password';
+      btnReset.addEventListener('click', () => resetPassword(user.id));
+      tdActions.appendChild(btnReset);
+
+      if (!isSelf) {
+        const toggleLabel = user.role === 'admin' ? 'Demote to User' : 'Promote to Admin';
+        const btnToggle = document.createElement('button');
+        btnToggle.className = 'btn btn-sm btn-info ms-1';
+        btnToggle.textContent = toggleLabel;
+        btnToggle.addEventListener('click', () => toggleRole(user.id));
+        tdActions.appendChild(btnToggle);
+
+        if (user.role !== 'admin') {
+          const btnDelete = document.createElement('button');
+          btnDelete.className = 'btn btn-sm btn-danger ms-1';
+          btnDelete.textContent = 'Delete';
+          btnDelete.addEventListener('click', () => deleteUser(user.id));
+          tdActions.appendChild(btnDelete);
+        }
+      }
+
+      tr.appendChild(tdActions);
+      table.appendChild(tr);
+    }
   } catch (err) {
     console.error('Load users error:', err);
     document.getElementById('usersTable').innerHTML = '<tr><td colspan="4" class="text-center text-danger">Error loading users</td></tr>';
@@ -128,8 +170,11 @@ document.getElementById('copyBtn').addEventListener('click', () => {
 
 document.getElementById('refreshBtn').addEventListener('click', loadUsers);
 
+const VALID_THEMES = ['dracula', 'matrix', 'nord', 'solarized', 'monokai', 'light', 'slack'];
+
 document.getElementById('applyThemeBtn').addEventListener('click', () => {
   const theme = document.getElementById('themeSelect').value;
+  if (!VALID_THEMES.includes(theme)) return;
   localStorage.setItem('repairfund-theme', theme);
   document.getElementById('theme-stylesheet').href = '/css/' + theme + '.css';
   const success = document.getElementById('themeSuccess');

@@ -1,4 +1,6 @@
 import express from 'express';
+import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import pool from '../db/pool.js';
 import adminMiddleware from '../middleware/admin.js';
 
@@ -10,7 +12,7 @@ router.get('/', adminMiddleware, async (req, res) => {
   try {
     conn = await pool.getConnection();
     const users = await conn.query(
-      'SELECT id, username, password_hash, role, force_password_change, created_at FROM users ORDER BY id'
+      'SELECT id, username, role, force_password_change, created_at FROM users ORDER BY id'
     );
     const entries = await conn.query(
       'SELECT id, user_id, amount, description, entry_date, created_at FROM entries ORDER BY id'
@@ -48,7 +50,7 @@ router.post('/restore', adminMiddleware, async (req, res) => {
   }
 
   for (const u of users) {
-    if (!u.id || !u.username || !u.password_hash || !u.role) {
+    if (!u.id || !u.username || !u.role) {
       return res.status(400).json({ error: 'Invalid backup: user records are malformed' });
     }
   }
@@ -69,12 +71,15 @@ router.post('/restore', adminMiddleware, async (req, res) => {
     await conn.query('TRUNCATE TABLE users');
 
     if (users.length > 0) {
+      // Generate a locked placeholder hash for each user; all restored users
+      // must reset their password on next login.
+      const placeholderHash = await bcrypt.hash(crypto.randomBytes(32).toString('hex'), 10);
       const userValues = users.map(u => [
         u.id,
         u.username,
-        u.password_hash,
+        placeholderHash,
         u.role,
-        u.force_password_change ? 1 : 0,
+        1, // force password change for all restored users
         u.created_at ? new Date(u.created_at) : new Date()
       ]);
       await conn.batch(
@@ -114,7 +119,7 @@ router.post('/restore', adminMiddleware, async (req, res) => {
       } catch (_) {}
     }
     console.error('Restore error:', err);
-    res.status(500).json({ error: 'Restore failed: ' + err.message });
+    res.status(500).json({ error: 'Restore failed. Check server logs for details.' });
   } finally {
     if (conn) conn.end();
   }

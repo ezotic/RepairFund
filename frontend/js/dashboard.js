@@ -39,19 +39,40 @@ async function loadEntries() {
     const isAdmin = currentUser && currentUser.role === 'admin';
     const currentUserId = currentUser && currentUser.id;
 
-    table.innerHTML = entries.map(entry => {
+    table.innerHTML = '';
+    for (const entry of entries) {
       const canDelete = isAdmin || entry.user_id === currentUserId;
-      return `
-      <tr>
-        <td>${new Date(entry.entry_date).toLocaleDateString()}</td>
-        <td>${entry.username}</td>
-        <td class="text-success">$${parseFloat(entry.amount).toFixed(2)}</td>
-        <td>${entry.description || '-'}</td>
-        <td>
-          ${canDelete ? `<button class="btn btn-sm btn-danger" onclick="deleteEntry(${entry.id})">Delete</button>` : ''}
-        </td>
-      </tr>`;
-    }).join('');
+      const tr = document.createElement('tr');
+
+      const tdDate = document.createElement('td');
+      tdDate.textContent = new Date(entry.entry_date).toLocaleDateString();
+      tr.appendChild(tdDate);
+
+      const tdUser = document.createElement('td');
+      tdUser.textContent = entry.username;
+      tr.appendChild(tdUser);
+
+      const tdAmount = document.createElement('td');
+      tdAmount.className = 'text-success';
+      tdAmount.textContent = '$' + parseFloat(entry.amount).toFixed(2);
+      tr.appendChild(tdAmount);
+
+      const tdDesc = document.createElement('td');
+      tdDesc.textContent = entry.description || '-';
+      tr.appendChild(tdDesc);
+
+      const tdAction = document.createElement('td');
+      if (canDelete) {
+        const btn = document.createElement('button');
+        btn.className = 'btn btn-sm btn-danger';
+        btn.textContent = 'Delete';
+        btn.addEventListener('click', () => deleteEntry(entry.id));
+        tdAction.appendChild(btn);
+      }
+      tr.appendChild(tdAction);
+
+      table.appendChild(tr);
+    }
   } catch (err) {
     console.error('Load entries error:', err);
     document.getElementById('entriesTable').innerHTML = '<tr><td colspan="5" class="text-center text-danger">Error loading entries</td></tr>';

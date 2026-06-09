@@ -77,7 +77,8 @@ router.post('/', async (req, res) => {
 // DELETE /api/entries/:id - Delete entry
 router.delete('/:id', async (req, res) => {
   try {
-    const entryId = req.params.id;
+    const entryId = parseInt(req.params.id, 10);
+    if (!entryId || entryId < 1) return res.status(400).json({ error: 'Invalid entry ID' });
     const userId = req.user.id;
     const isAdmin = req.user.role === 'admin';
 
