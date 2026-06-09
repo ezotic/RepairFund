@@ -24,7 +24,7 @@ A Dockerized web application for tracking shared repair fund contributions with 
 
 ```bash
 # Start the containers
-docker compose up --build
+docker compose up --build -d
 
 # App will be available at http://localhost:3000
 ```
@@ -155,7 +155,11 @@ To add a new theme: create `frontend/css/<name>.css` following the structure of 
 
 ## Environment Variables
 
-Create a `.env` file in the root directory (see `.env.example`):
+Copy `.env.example` to `.env` and fill in your values:
+
+```bash
+cp .env.example .env
+```
 
 ```env
 DB_HOST=db
