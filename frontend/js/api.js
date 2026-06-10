@@ -24,8 +24,8 @@ const API = {
         }
       }
 
-      // Redirect on unauthorized
-      if (response.status === 401) {
+      // Redirect on unauthorized (skip for the login endpoint itself)
+      if (response.status === 401 && !path.includes('/auth/login')) {
         window.location.href = '/login.html';
         return;
       }
