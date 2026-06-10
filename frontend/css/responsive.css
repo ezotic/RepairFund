@@ -1,0 +1,31 @@
+/* Minimum touch target height for all buttons */
+.btn {
+  min-height: 44px;
+}
+
+/* Admin tabs: single scrollable row on mobile */
+@media (max-width: 767.98px) {
+  #adminTabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  #adminTabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  #adminTabs .nav-item {
+    flex-shrink: 0;
+  }
+}
+
+/* Admin h1 scale-down on small phones */
+@media (max-width: 575.98px) {
+  .container > h1:first-of-type {
+    font-size: 1.5rem;
+  }
+}
