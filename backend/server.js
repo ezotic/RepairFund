@@ -29,6 +29,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
 app.use(helmet({
+  hsts: false,
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
@@ -41,7 +42,7 @@ app.use(helmet({
       baseUri: ["'self'"],
       formAction: ["'self'"],
       frameAncestors: ["'self'"],
-      upgradeInsecureRequests: [],
+      upgradeInsecureRequests: null,
     }
   }
 }));
