@@ -18,7 +18,3 @@ CREATE TABLE IF NOT EXISTS entries (
   created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
-
--- Seed admin user (password: admin123)
-INSERT INTO users (username, password_hash, role, force_password_change)
-VALUES ('admin', '$2b$10$pMyZgWC/ymsSkw2neNoLBOaWXEWVWpE74vs6lUeiXobhoHcL7UZdi', 'admin', FALSE);

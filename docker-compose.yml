@@ -29,6 +29,7 @@ services:
       DB_PASS: ${DB_PASS}
       DB_NAME: ${DB_NAME}
       JWT_SECRET: ${JWT_SECRET}
+      ADMIN_INITIAL_PASS: ${ADMIN_INITIAL_PASS}
       NODE_ENV: ${NODE_ENV}
     volumes:
       - ./frontend:/app/public

@@ -1,5 +1,4 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import 'dotenv/config';
 
 // Fail fast if required environment variables are missing
 const REQUIRED_ENV = ['JWT_SECRET', 'DB_HOST', 'DB_USER', 'DB_PASS', 'DB_NAME'];
@@ -19,6 +18,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import authMiddleware from './middleware/auth.js';
+import { bootstrapAdmin } from './db/bootstrap.js';
 import authRoutes from './routes/auth.js';
 import usersRoutes from './routes/users.js';
 import entriesRoutes from './routes/entries.js';
@@ -83,6 +83,17 @@ app.get('*', (req, res) => {
 });
 
 const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`RepairFund app listening on port ${PORT}`);
-});
+
+const startServer = async () => {
+  try {
+    await bootstrapAdmin();
+    app.listen(PORT, () => {
+      console.log(`RepairFund app listening on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error('Application startup failed:', err);
+    process.exit(1);
+  }
+};
+
+startServer();

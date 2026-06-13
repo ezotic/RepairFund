@@ -29,14 +29,25 @@ docker compose up --build -d
 # App will be available at http://localhost:3000
 ```
 
-### Default Admin Credentials
+### Initial Admin Credentials
 
 ```
 Username: admin
 Password: (set via ADMIN_INITIAL_PASS in .env)
 ```
 
-**Important:** Change this password on first login.
+The admin account is created by the application only when the database has no
+admin. The initial password must be at least 8 characters, and the admin is
+required to change it on first login. Existing admin passwords are not
+overwritten during normal startup.
+
+Older installations containing the former `admin123` seed are detected at
+startup and migrated to `ADMIN_INITIAL_PASS`, with a password change required
+on the next login.
+
+Before deploying this security update, rotate `JWT_SECRET` to a new random
+value. This signs out existing sessions so every user receives the new
+identity-only token format.
 
 ## User Guide
 
@@ -138,6 +149,8 @@ NODE_ENV=development
 
 - Passwords are hashed with bcryptjs (10 salt rounds)
 - JWTs are stored in httpOnly cookies (prevents XSS theft)
+- Tokens contain only the user ID; current role and account status are loaded
+  from the database on every authenticated request
 - Admin functions are role-gated on the backend
 - SQL injection protected via parameterized queries
 - CORS restricted to localhost during development
@@ -157,7 +170,10 @@ docker compose ps
 ```
 
 ### Can't log in
-- Verify credentials match `ADMIN_INITIAL_PASS` in `.env`
+- On a fresh install or legacy-seed migration, verify credentials match
+  `ADMIN_INITIAL_PASS` in `.env`
+- On an existing installation, continue using the admin's current password;
+  startup does not replace it
 - Check the browser console for error messages
 - Ensure cookies are enabled
 

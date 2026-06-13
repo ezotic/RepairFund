@@ -6,6 +6,60 @@ import adminMiddleware from '../middleware/admin.js';
 
 const router = express.Router();
 
+export const restoreDatabase = async ({
+  conn,
+  users,
+  entries,
+  placeholderHash
+}) => {
+  await conn.beginTransaction();
+
+  try {
+    // Delete child rows first so foreign keys remain enforced throughout.
+    await conn.query('DELETE FROM entries');
+    await conn.query('DELETE FROM users');
+
+    if (users.length > 0) {
+      const userValues = users.map(u => [
+        u.id,
+        u.username,
+        placeholderHash,
+        u.role,
+        1,
+        u.created_at ? new Date(u.created_at) : new Date()
+      ]);
+      await conn.batch(
+        'INSERT INTO users (id, username, password_hash, role, force_password_change, created_at) VALUES (?, ?, ?, ?, ?, ?)',
+        userValues
+      );
+    }
+
+    if (entries.length > 0) {
+      const entryValues = entries.map(e => [
+        e.id,
+        e.user_id,
+        e.amount,
+        e.description || null,
+        String(e.entry_date).slice(0, 10),
+        e.created_at ? new Date(e.created_at) : new Date()
+      ]);
+      await conn.batch(
+        'INSERT INTO entries (id, user_id, amount, description, entry_date, created_at) VALUES (?, ?, ?, ?, ?, ?)',
+        entryValues
+      );
+    }
+
+    await conn.commit();
+  } catch (err) {
+    try {
+      await conn.rollback();
+    } catch (rollbackErr) {
+      console.error('Restore rollback error:', rollbackErr);
+    }
+    throw err;
+  }
+};
+
 // GET /api/backup - export full database snapshot (admin only)
 router.get('/', adminMiddleware, async (req, res) => {
   let conn;
@@ -63,48 +117,11 @@ router.post('/restore', adminMiddleware, async (req, res) => {
 
   let conn;
   try {
+    // All restored users receive an unknown password and must be reset by an
+    // administrator before they can sign in.
+    const placeholderHash = await bcrypt.hash(crypto.randomBytes(32).toString('hex'), 10);
     conn = await pool.getConnection();
-    await conn.beginTransaction();
-
-    await conn.query('SET FOREIGN_KEY_CHECKS=0');
-    await conn.query('TRUNCATE TABLE entries');
-    await conn.query('TRUNCATE TABLE users');
-
-    if (users.length > 0) {
-      // Generate a locked placeholder hash for each user; all restored users
-      // must reset their password on next login.
-      const placeholderHash = await bcrypt.hash(crypto.randomBytes(32).toString('hex'), 10);
-      const userValues = users.map(u => [
-        u.id,
-        u.username,
-        placeholderHash,
-        u.role,
-        1, // force password change for all restored users
-        u.created_at ? new Date(u.created_at) : new Date()
-      ]);
-      await conn.batch(
-        'INSERT INTO users (id, username, password_hash, role, force_password_change, created_at) VALUES (?, ?, ?, ?, ?, ?)',
-        userValues
-      );
-    }
-
-    if (entries.length > 0) {
-      const entryValues = entries.map(e => [
-        e.id,
-        e.user_id,
-        e.amount,
-        e.description || null,
-        String(e.entry_date).slice(0, 10),
-        e.created_at ? new Date(e.created_at) : new Date()
-      ]);
-      await conn.batch(
-        'INSERT INTO entries (id, user_id, amount, description, entry_date, created_at) VALUES (?, ?, ?, ?, ?, ?)',
-        entryValues
-      );
-    }
-
-    await conn.query('SET FOREIGN_KEY_CHECKS=1');
-    await conn.commit();
+    await restoreDatabase({ conn, users, entries, placeholderHash });
 
     res.json({
       success: true,
@@ -112,12 +129,6 @@ router.post('/restore', adminMiddleware, async (req, res) => {
       entriesRestored: entries.length
     });
   } catch (err) {
-    if (conn) {
-      try {
-        await conn.query('SET FOREIGN_KEY_CHECKS=1');
-        await conn.rollback();
-      } catch (_) {}
-    }
     console.error('Restore error:', err);
     res.status(500).json({ error: 'Restore failed. Check server logs for details.' });
   } finally {
